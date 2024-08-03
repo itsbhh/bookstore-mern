@@ -8,11 +8,12 @@ router.post("/add-book", authenticateToken, async (req, res) => {
   try {
     const { id } = req.headers;
     const user = await User.findById(id);
-    if (user.role!=="admin")
-    {
-        return res.status(400).json({ message: "You Don't have access to perform admin work!" });
+    if (user.role !== "admin") {
+      return res
+        .status(400)
+        .json({ message: "You Don't have access to perform admin work!" });
     }
-    const book = new book({
+    const book = new Book({
       url: req.body.url,
       title: req.body.title,
       author: req.body.author,
@@ -27,4 +28,32 @@ router.post("/add-book", authenticateToken, async (req, res) => {
   }
 });
 
+//update-book
+router.put("/update-book", authenticateToken, async (req, res) => {
+  try {
+    const { bookid } = req.headers;
+    await Book.findByIdAndUpdate(bookid, {
+      url: req.body.url,
+      title: req.body.title,
+      author: req.body.author,
+      price: req.body.price,
+      desc: req.body.price,
+      language: req.body.language,
+    });
+    return res.status(200).json({ message: "Book Updated succesfully" });
+  } catch (error) {
+    return res.status(500).json({ message: "An error occured" });
+  }
+});
+
+//delete book
+router.delete("/delete-book", authenticateToken, async (req, res) => {
+  try {
+    const { bookid } = req.headers;
+    await Book.findByIdAndDelete(bookid);
+    return res.status(200).json({ message: "Book deleted succesfully" });
+  } catch (error) {
+    return res.status(500).json({ message: "An error occured" });
+  }
+});
 module.exports = router;
