@@ -1,74 +1,133 @@
-import React from 'react';
-import './Navbar.css';
+import React from "react";
+import { Link } from "react-router-dom";
+import { FaGripLines } from "react-icons/fa";
+import { useState } from "react";
+import { useSelector } from "react-redux";
 
 const Navbar = () => {
+  const links = [
+    {
+      title: "Home",
+      link: "/",
+    },
+    {
+      title: "About Us",
+      link: "/about-us",
+    },
+    {
+      title: "All Books",
+      link: "/all-books",
+    },
+    {
+      title: "Cart",
+      link: "/cart",
+    },
+    {
+      title: "Profile",
+      link: "/profile",
+    },
+  ];
+  const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
+  if (isLoggedIn === false) {
+    links.splice(2, 2);
+  }
+  const [MobileNav, setMobileNav] = useState("hidden");
   return (
-    <div> <div class="html-container">
-    <div class="html-section">
-      <div class="html-project">
-        <div class="navigation">
-          <nav>
-            <ul class="nav-type">
-              <li><a href="https://codepen.io/EneergeticTomy/" target="_blank" class="active">Home</a></li>
-              <li><a href="https://codepen.io/TomikaBoy/full/LqMpaE" target="_blank" class="active1">About</a></li>
-              <li><a href="https://codepen.io/" target="_blank" class="active2">Contact</a></li>
-              <li><a href="https://w3schools.com/" target="_blank" class="active3">Support</a></li>
-              <div class="line"></div>
-              <li><a><i class="fa fa-search" onclick="show()">
-                </i></a></li>
-            </ul>
-          </nav>
-        </div>
-      </div>
-    </div>
-    <noscript>
-    <div class="first-line">
-      <div class="linear">
-        <div class="line-w5">
-          
-        </div>
-      </div>
-    </div>
-    </noscript>
-<template>
-    <div class="flash-fluid">
-      <div class="flash-time">
-        <div class="flash-GIF">
-          
-        </div>
-      </div>
-     </div>
-</template>
-<noscript>     
-    <div class="cyrcle-center">
-      <div class="radial-cyrcle">
-        
-      </div>
-    </div>
-</noscript>
-  </div>
-<template>   
-  <div class="text-class">
-    <div class="text-container">
-      <div class="text-content-fluid" id="chinese-text" data-text-type="chinese">
-        <div class="chinese-text">設</div>
-        <div class="chinese-text2">計</div>
-        <div class="chinese-text3">和</div>
-        <div class="chinese-text4">開</div>
-        <div class="chinese-text5">發</div>
-      </div>
-    </div>
-  </div>
-</template>  
-  
-  <div class="dropdown" id="anotherFunction">
-   <div class="drop1">HTML</div>
-    <div class="drop2">CSS</div>
-    <div class="drop3">Javascript</div>
-    <div class="drop4">Sass</div>
-  </div>
-</div>
-  )
-}
+    <>
+      <nav className="z-50 relative flex bg-zinc-800 text-white px-8 py-4 items-center justify-between ">
+        <Link to="/" className="flex items-center">
+          <img
+            className="h-10 me-4"
+            src="https://cdn-icons-png.flaticon.com/128/10433/10433049.png"
+            alt="logo"
+          />
 
-export default Navbar
+          <h1 className="text-2xl font-semibold">TheBookWorld</h1>
+        </Link>
+
+        <div className="nav-links-bookheaven block md:flex items-center gap-4 ">
+          <div className="hidden md:flex gap-4">
+            {links.map((items, i) => (
+              <Link
+                to={items.link}
+                className="hover:text-blue-500 transition-all duration-300"
+                key={i}
+              >
+                {items.title}{" "}
+              </Link>
+            ))}
+          </div>
+
+          <div className="hidden md:flex gap-4">
+            <Link
+              to="/LogIn"
+              className="px-4 py-1 border border-blue-500 rounded hover:bg-white hover:text-zinc-800 transition-all duration-300"
+            >
+              LogIn
+            </Link>
+
+            <Link
+              to="SignUp"
+              className="px-4 py-1 bg-blue-500 rounded hover:bg-white hover:text-zinc-800 transition-all duration-300"
+            >
+              SignUp
+            </Link>
+          </div>
+          <button
+            className="block md:hidden text-white text-2xl hover:text-zinc-400"
+            onClick={() =>
+              MobileNav === "hidden"
+                ? setMobileNav("block")
+                : setMobileNav("hidden")
+            }
+          >
+            <FaGripLines />
+          </button>
+        </div>
+      </nav>
+      <div
+        className={`${MobileNav} bg-zinc-800 h-screen absolute top-0 left-0 w-full z-40 flex flex-col items-center justify-center`}
+        onClick={() =>
+          MobileNav === "hidden"
+            ? setMobileNav("block")
+            : setMobileNav("hidden")
+        }
+      >
+        {" "}
+        {links.map((items, i) => (
+          <Link
+            to={items.link}
+            className={`${MobileNav} text-white text-4xl mb-8 font-semibold hover:text-blue-500 transition-all duration-300`}
+            key={i}
+          >
+            {items.title}{" "}
+          </Link>
+        ))}
+        <Link
+          to="/LogIn"
+          className={`${MobileNav} px-8 text-3xl mb-8 font-semibold  py-1 border border-blue-500 rounded text-white hover:bg-white hover:text-zinc-800 transition-all duration-300`}
+          onClick={() =>
+            MobileNav === "hidden"
+              ? setMobileNav("block")
+              : setMobileNav("hidden")
+          }
+        >
+          LogIn
+        </Link>
+        <Link
+          to="SignUp"
+          className={`${MobileNav} px-8 text-3xl mb-8 font-semibold  py-1 bg-blue-500 rounded hover:bg-white hover:text-zinc-800 transition-all duration-300`}
+          onClick={() =>
+            MobileNav === "hidden"
+              ? setMobileNav("block")
+              : setMobileNav("hidden")
+          }
+        >
+          SignUp
+        </Link>
+      </div>
+    </>
+  );
+};
+
+export default Navbar;
