@@ -11,7 +11,7 @@ const order = new mongoose.Schema(
       ref: "books",
     },
     status: {
-      type: string,
+      type: String,
       default: "Order Placed",
       enum: ["Order Placed", "Out for Delivery, Delivered,Canceled"],
     },
