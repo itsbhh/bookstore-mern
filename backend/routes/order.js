@@ -37,7 +37,7 @@ router.get("/get-order-history", authenticateToken, async (req, res) => {
     const { id } = req.headers;
     const userData = await User.findById(id).populate({
       path: "orders",
-      populate: { path: "books" },
+      populate: { path: "book" },
     });
     const ordersData = userData.orders.reverse();
     return res.json({
