@@ -1,5 +1,5 @@
 const router = require("express").Router();
-const User = require("../../models/user");
+const User = require("../models/user");
 const { authenticateToken } = require("./userAuth");
 
 //add book to favourite
