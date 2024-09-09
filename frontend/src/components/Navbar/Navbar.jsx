@@ -34,7 +34,7 @@ const Navbar = () => {
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
   const role = useSelector((state) => state.auth.role);
   if (isLoggedIn === false) {
-    links.splice(2, 4);
+    links.splice(3, 3);
   }
   if (isLoggedIn === true && role === "user") {
     links.splice(5, 1);
