@@ -16,7 +16,7 @@ const Favourites = () => {
   useEffect(() => {
     const fetch = async () => {
       const response = await axios.get(
-        "http://localhost:1000/api/v1/get-favourite-books",
+        "https://bookstore-mern-1uaq.onrender.com/api/v1/get-favourite-books",
 
         { headers }
       );
