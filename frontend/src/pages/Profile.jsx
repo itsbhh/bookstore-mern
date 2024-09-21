@@ -15,7 +15,7 @@ const Profile = () => {
   useEffect(() => {
     const fetch = async () => {
       const response = await axios.get(
-        "http://localhost:1000/api/v1/get-user-information",
+        "https://bookstore-mern-1uaq.onrender.com/api/v1/get-user-information",
         { headers }
       );
       setProfile(response.data);
@@ -25,7 +25,7 @@ const Profile = () => {
   const PlaceOrder = async () => {
     try {
       const response = await axios.post(
-        `http://localhost:1000/api/v1/place-order`,
+        `https://bookstore-mern-1uaq.onrender.com/api/v1/place-order`,
 
         { order: Cart },
 
