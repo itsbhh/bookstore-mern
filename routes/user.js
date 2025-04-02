@@ -61,15 +61,13 @@ router.post("/sign-in", async (req, res) => {
     }
     await bcrypt.compare(password, existingUser.password, (err, data) => {
       if (data) {
-        const authClaims = [
-          {
-            name: existingUser.username,
-          },
-          { role: existingUser.role },
-        ];
-        const token = jwt.sign({ authClaims }, "bookStore123", {
-          expiresIn: "30d",
-        });
+     const authClaims = {
+  id: existingUser._id,
+  name: existingUser.username,
+  role: existingUser.role,
+};
+       const token = jwt.sign(authClaims, "bookStore123", { expiresIn: "30d" });
+
         res.status(200).json({
           id: existingUser._id,
           role: existingUser.role,
@@ -89,7 +87,17 @@ router.post("/sign-in", async (req, res) => {
 router.get("/get-user-information", authenticateToken, async (req, res) => {
   try {
     const { id } = req.headers;
+
+    if (!id) {
+      return res.status(400).json({ message: "User ID is required" });
+    }
+
     const data = await User.findById(id).select("-password");
+
+    if (!data) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
     return res.status(200).json(data);
   } catch (error) {
     res.status(500).json({ message: "Internal Server Error" });
